@@ -2,7 +2,7 @@ package com.juliodias.domain;
 
 public class Funcionario {
     private String nome;
-    private int idade;
+    private final int idade;
     private double salario;
     private boolean ativo;
 
@@ -10,9 +10,20 @@ public class Funcionario {
     public Funcionario(String nome, int idade, double salario, boolean ativo) {
         this.nome = nome;
         this.idade = idade;
-        this.salario = salario;
         this.ativo = ativo;
+        if (salario <= 0) {
+            throw new IllegalArgumentException("Salário deve ser maior que zero.");
+        }
+
+        this.salario = salario;
     }
+
+    //Setters e Getters
+    public String getNome() {return nome;}
+    public double getSalario() {return salario;}
+    public boolean isAtivo() {return ativo;}
+    public int getIdade() {return idade;}
+
 
     //Informa salário anual
     public double calcularSalarioAnual() {
@@ -21,45 +32,44 @@ public class Funcionario {
     }
 
     //Informa aumento
-    public void informaAumentoPercentual (double percentual) {
+    public boolean aumentarPercentualSalario (double percentual) {
         if (percentual > 0) {
             this.salario = salario * (1 + percentual / 100);
-            System.out.println("Aumento de " + percentual + "%");
-            System.out.println("Valor do salário após aumento: " + salario);
-        } else{
-            System.out.println("Valor percentual deverá ser maior que 0!");
+            return true;
         }
+        return false;
     }
 
     //Informa se funcionário maior de idade
-    public void funcionarioMaiorDeIdade (){
-        if (idade < 18) {
-            System.out.println("Funcionario não atingiu a maioridade");
-        } else {
-            System.out.println("Funcionario maior de idade");
+    public boolean funcionarioMaiorDeIdade () {
+        /*if (idade < 18) {
+            return false;
         }
+        return true;*/
+        return idade >= 18;
     }
 
     //Informa se o funcionário está ativo
-    public void funcionarioAtivo () {
-        if (ativo) {
-            System.out.println("Funcionario ativo");
-        } else  {
-            System.out.println("Funcionario inativo");
-        }
+    public boolean funcionarioAtivo () {
+        return ativo;
     }
 
     //Desativar funcionario
-    public void desativarFuncionario () {
-        ativo = false;
+    public boolean desativarFuncionario () {
+        if (ativo) {
+            ativo = false;
+            return true;
+        }
+        return false;
     }
 
-    public void dadosFuncionario () {
-        System.out.println("Nome: " + nome);
-        System.out.println("Idade: " + idade);
-        System.out.println("Salario: " + salario);
-        System.out.println("Ativo: " + ativo);
-
+    //Ativar funcionario
+    public boolean ativarFuncionario () {
+        if (!ativo) {
+            ativo = true;
+            return true;
+        }
+        return false;
     }
-
 }
+
