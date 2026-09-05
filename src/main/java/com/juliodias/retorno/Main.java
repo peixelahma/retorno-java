@@ -5,28 +5,107 @@ import com.juliodias.domain.Funcionario;
 public class Main {
 
     public static void main(String[] args) {
+        double salarioAnual;
 
-        Funcionario funcionario1 = new Funcionario("Julio", 44, 10000, true);
-        funcionario1.dadosFuncionario();
-        double salarioAnual = funcionario1.calcularSalarioAnual();
-        System.out.println("Salário anual: " + salarioAnual);
-        funcionario1.informaAumentoPercentual( 10);
-        funcionario1.funcionarioMaiorDeIdade();
-        funcionario1.funcionarioAtivo();
+        try {
+            Funcionario funcionario1 = new Funcionario("Julio", 44, 10000, false);
+            imprimirDadosFuncionario(funcionario1);
+            salarioAnual = funcionario1.calcularSalarioAnual();
+            System.out.println("Salário anual: " + salarioAnual);
+
+            if (funcionario1.aumentarPercentualSalario(10)) {
+                System.out.println("Aumento salarial");
+                System.out.println("Salário mensal após aumento salarial:" + funcionario1.getSalario());
+            } else {
+                System.out.println("Percentual de aumento salarial deve ser maior que 0");
+            }
+
+            if (funcionario1.funcionarioMaiorDeIdade()) {
+                System.out.println("Funcionário maior de idade");
+            } else {
+                System.out.println("Funcionário não atingiu a maioridade");
+            }
+            funcionario1.ativarFuncionario();
+
+            if (funcionario1.funcionarioAtivo()) {
+                System.out.println("Funcionário Ativo !");
+            } else {
+                System.out.println("Funcionário Inativo !");
+            }
+        } catch(IllegalArgumentException e) {
+            System.out.println("Não foi possível criar o funcionário: " + e.getMessage());
+        }
+
+
 
         System.out.println();
-        Funcionario funcionario2 = new Funcionario("Ana", 45, 7000, true);
-        funcionario2.dadosFuncionario();
-        salarioAnual = funcionario2.calcularSalarioAnual();
-        System.out.println("Salário anual: " + salarioAnual);
-        funcionario2.informaAumentoPercentual( 20);
-        funcionario2.funcionarioMaiorDeIdade();
-        funcionario2.funcionarioAtivo();
+        try {
+            Funcionario funcionario2 = new Funcionario("Ana", 45, 7000, true);
+            imprimirDadosFuncionario(funcionario2);
+            salarioAnual = funcionario2.calcularSalarioAnual();
+            System.out.println("Salário anual: " + salarioAnual);
 
-        funcionario2.desativarFuncionario();
-        System.out.println("Verificar situação do funcionario: " );
-        funcionario2.funcionarioAtivo();
+            if (funcionario2.aumentarPercentualSalario(-5)) {
+                System.out.println("Aumento salarial");
+                System.out.println("Salário mensal após aumento salarial:" + funcionario2.getSalario());
+            } else {
+                System.out.println("Percentual de aumento salarial deve ser maior que 0");
+            }
+
+            if (funcionario2.funcionarioMaiorDeIdade()) {
+                System.out.println("Funcionário maior de idade");
+            } else {
+                System.out.println("Funcionário não atingiu a maioridade");
+            }
 
 
-    }   
+            if (funcionario2.funcionarioAtivo()) {
+                System.out.println("Funcionário Ativo !");
+            } else {
+                System.out.println("Funcionário Inativo !");
+            }
+
+            if (funcionario2.desativarFuncionario()) {
+                System.out.println("Funcionário desativado !");
+            } else {
+                System.out.println("Funcionario já estava inativo");
+            }
+
+            if (funcionario2.funcionarioAtivo()) {
+                System.out.println("Funcionário Ativo !");
+            } else {
+                System.out.println("Funcionário Inativo !");
+            }
+
+            if (funcionario2.ativarFuncionario()) {
+                System.out.println("Funcionário ativado !");
+            } else {
+                System.out.println("Funcionario já estava inativo");
+            }
+
+            if (funcionario2.funcionarioAtivo()) {
+                System.out.println("Funcionário Ativo !");
+            } else {
+                System.out.println("Funcionário Inativo !");
+            }
+        } catch(IllegalArgumentException e) {
+            System.out.println("Não foi possível criar o funcionário: " + e.getMessage());
+        }
+
+
+        try {
+            Funcionario funcionario3 = new Funcionario("Carlos", 23, -1000, true);
+            imprimirDadosFuncionario(funcionario3);
+        } catch(IllegalArgumentException e) {
+            System.out.println("Não foi possível criar o funcionário: " + e.getMessage());
+        }
+    }
+
+    public static void imprimirDadosFuncionario (Funcionario funcionario) {
+        System.out.println("Nome: " + funcionario.getNome());
+        System.out.println("Salario: " + funcionario.getSalario());
+        System.out.println("Idade: " + funcionario.getIdade());
+        System.out.println("Ativo: " + funcionario.isAtivo());
+    }
+
    }
