@@ -1,6 +1,7 @@
 package com.juliodias.retorno;
 
 import com.juliodias.domain.Funcionario;
+import com.juliodias.notificacao.*;
 
 public class Main {
 
@@ -99,6 +100,20 @@ public class Main {
         } catch(IllegalArgumentException e) {
             System.out.println("Não foi possível criar o funcionário: " + e.getMessage());
         }
+
+        //Envio de Notificação
+        Notificacao email = new EmailNotificacao();
+        ProcessadorNotificacao processador = new ProcessadorNotificacao(email);
+        processador.processar();
+
+        Notificacao sms = new SmsNotificacao();
+        processador = new ProcessadorNotificacao(sms);
+        processador.processar();
+
+        Notificacao push = new PushNotificacao();
+        processador = new ProcessadorNotificacao(push);
+        processador.processar();
+
     }
 
     public static void imprimirDadosFuncionario (Funcionario funcionario) {
