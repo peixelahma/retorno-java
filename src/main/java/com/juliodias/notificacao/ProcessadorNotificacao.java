@@ -7,7 +7,7 @@ public class ProcessadorNotificacao {
         this.notificacao = notificacao;
     }
 
-    public void processar() {
-        notificacao.enviarNotificacao();
+    public void processar(String mensagem) {
+        notificacao.enviarNotificacao(mensagem);
     }
 }

@@ -104,15 +104,15 @@ public class Main {
         //Envio de Notificação
         Notificacao email = new EmailNotificacao();
         ProcessadorNotificacao processador = new ProcessadorNotificacao(email);
-        processador.processar();
+        processador.processar("Notificação enviada por email");
 
         Notificacao sms = new SmsNotificacao();
         processador = new ProcessadorNotificacao(sms);
-        processador.processar();
+        processador.processar("Notificação enviada por SMS");
 
         Notificacao push = new PushNotificacao();
         processador = new ProcessadorNotificacao(push);
-        processador.processar();
+        processador.processar("Notificação enviada por Push");
 
     }
 
