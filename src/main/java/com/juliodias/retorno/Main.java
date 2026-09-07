@@ -1,6 +1,11 @@
 package com.juliodias.retorno;
 
+import com.juliodias.Pagamento.Pagamento;
+import com.juliodias.Pagamento.PagamentoCartao;
+import com.juliodias.domain.Cliente;
 import com.juliodias.domain.Funcionario;
+import com.juliodias.domain.Pedido;
+import com.juliodias.domain.Produto;
 import com.juliodias.notificacao.*;
 
 public class Main {
@@ -113,6 +118,36 @@ public class Main {
         Notificacao push = new PushNotificacao();
         processador = new ProcessadorNotificacao(push);
         processador.processar("Notificação enviada por Push");
+
+        //Cadastrar produto
+        Produto produto1 = new Produto(1, "computador");
+        Produto produto2 = new Produto(2, "impressora");
+        Produto produto3 = new Produto(3, "mouse");
+
+        Cliente cliente1 = new Cliente("Julio");
+
+        //Criando pedido
+        Pedido pedido1 = new Pedido(1);
+
+
+        //Adicionando produto ao pedido
+        pedido1.adicionarProduto(produto1);
+        pedido1.adicionarProduto(produto2);
+
+        //Adicionando pedido ao cliente
+        cliente1.adicionarPedido(pedido1);
+
+        //Adicionando forma de pagamento
+        Pagamento cartao = new PagamentoCartao();
+        cartao.adicionarPagamento("cartao");
+        pedido1.adicionarTipoPagamento(cartao);
+
+        //listando o pedido
+        cliente1.listarPedidos();
+
+
+
+
 
     }
 
