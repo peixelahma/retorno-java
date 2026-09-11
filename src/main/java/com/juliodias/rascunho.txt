@@ -1,0 +1,22 @@
+Parte 1 — Identifique os relacionamentos
+
+Você terá:
+
+Pedido
+Cliente
+Produto
+Pagamento
+
+Antes de criar qualquer classe, determine:
+
+Qual objeto tem outro?
+Qual objeto utiliza outro?
+Existe algum relacionamento "é um"?
+
+Não programe ainda.
+
+Resposta:
+Pedido depende de um Produto
+Cliente tem/possui um Pedido
+Pagamento depende de um Pedido
+Pagamento depende de um Cliente

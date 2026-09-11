@@ -8,6 +8,8 @@ import com.juliodias.domain.Pedido;
 import com.juliodias.domain.Produto;
 import com.juliodias.notificacao.*;
 
+import java.util.*;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -119,10 +121,78 @@ public class Main {
         processador = new ProcessadorNotificacao(push);
         processador.processar("Notificação enviada por Push");
 
-        //Cadastrar produto
+        //Cadastrar produto -Com LIST
         Produto produto1 = new Produto(1, "computador");
         Produto produto2 = new Produto(2, "impressora");
         Produto produto3 = new Produto(3, "mouse");
+
+        List<Produto> produtos = new ArrayList<>();
+        produtos.add(produto1);
+        produtos.add(produto2);
+        produtos.add(produto3);
+        produtos.add(produto1);
+
+        System.out.println("Exercício List");
+        System.out.println("Quantidade de produtos cadastrado: " + produtos.size());
+        System.out.println("Produto 2: " +  produtos.get(2));
+        System.out.println("Produto impressoa está na lista? " + produtos.contains(produto2));
+        produtos.remove(2);
+        System.out.println("Quantidade de produtos cadastrado: " + produtos.size());
+
+
+        //Cadastrar produto -Com SET
+        Produto produto4 = new Produto(1, "Teclado");
+        Produto produto5 = new Produto(2, "Mouse");
+        Produto produto6 = new Produto(3, "Monitor");
+
+        Set<Produto> produtosSet = new HashSet<>();
+        produtosSet.add(produto4);
+        produtosSet.add(produto5);
+        produtosSet.add(produto4);
+        produtosSet.add(produto6);
+        produtosSet.add(produto5);
+        System.out.println("Exercício Set");
+        System.out.println("Quantidade de produtos cadastrado: " + produtosSet.size());
+
+        System.out.println("Produto impressoa está na lista? " + produtosSet.contains(produto2));
+        produtosSet.remove(produto6);
+        System.out.println("Quantidade de produtos cadastrado: " + produtosSet.size());
+
+        //Cadastrar produto com MAP
+        Produto produto7 = new Produto(1, "Teclado");
+        Produto produto8 = new Produto(2, "Mouse");
+        Produto produto9 = new Produto(3, "Monitor");
+
+        Map<Integer, Produto> produtosMap = new HashMap<>();
+        produtosMap.put(1, produto7);
+        produtosMap.put(2, produto8);
+        produtosMap.put(3, produto9);
+        System.out.println("Exercício sobre Map");
+        System.out.println("Item produto dentro do Map: " + produtosMap.get(1).getNome());
+        System.out.println("Existe Monitor no Map: " + produtosMap.containsValue(produto9));
+        produtosMap.remove(2);
+        System.out.println("Qtd de registros do Map: " + produtosMap.size());
+
+        /*
+        List → Qdo preciso de itens ordenados e com índice. Unicidade não importa
+        Set  → Qdo não posso repetir os dados
+        Map  → Cadastro de registro com chave e valor
+
+        Para a parte 6, entendo que o Cliente pode fazer um pedido e cada pedido é único (Daria para usar o Set),
+        porém, no Pedido ele pode ter produtos repetidos (usaria o List mesmo).
+
+        Escolha a melhor estrutura:
+
+        A) fila de pedidos onde a ordem de inserção importa.
+        R: List
+
+        B) conjunto de permissões onde não pode haver duplicação.
+        R: Set
+
+        C) produtos localizados pelo ID.
+        R: Map
+         */
+
 
         Cliente cliente1 = new Cliente("Julio");
 
@@ -144,11 +214,6 @@ public class Main {
 
         //listando o pedido
         cliente1.listarPedidos();
-
-
-
-
-
     }
 
     public static void imprimirDadosFuncionario (Funcionario funcionario) {
