@@ -26,4 +26,9 @@ public class Cliente {
             pedido.listarFormaPagamento();
         }
     }
+
+    public String getNome() {
+        return nome;
+    }
+
 }

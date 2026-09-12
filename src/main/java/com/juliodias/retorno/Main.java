@@ -2,6 +2,7 @@ package com.juliodias.retorno;
 
 import com.juliodias.Pagamento.Pagamento;
 import com.juliodias.Pagamento.PagamentoCartao;
+import com.juliodias.Repository.Repositorio;
 import com.juliodias.domain.Cliente;
 import com.juliodias.domain.Funcionario;
 import com.juliodias.domain.Pedido;
@@ -193,8 +194,37 @@ public class Main {
         R: Map
          */
 
+        //Criar repositorio Produto
+        Repositorio<Produto> repositorioProduto = new Repositorio<Produto>();
+        repositorioProduto.adicionar(produto1);
+        repositorioProduto.adicionar(produto2);
+        repositorioProduto.adicionar(produto3);
+        repositorioProduto.adicionar(produto4);
+
+        System.out.println( "Item buscado: " + repositorioProduto.buscar(2).getNome());
+        repositorioProduto.remover(produto3);
+        System.out.println("Quantidade: " + repositorioProduto.quantidade());
+        produtos = repositorioProduto.listar();
+        for (Produto p : produtos) {
+            System.out.println(p.getNome());
+        }
 
         Cliente cliente1 = new Cliente("Julio");
+        Cliente cliente2 = new Cliente("Ana");
+
+        //Criar repositorio Cliente
+        Repositorio<Cliente> repositorioCliente = new Repositorio<Cliente>();
+        repositorioCliente.adicionar(cliente1);
+        repositorioCliente.adicionar(cliente2);
+
+        System.out.println( "Item buscado: " + repositorioCliente.buscar(1).getNome());
+        repositorioCliente.remover(cliente2);
+        System.out.println("Quantidade: " + repositorioCliente.quantidade());
+        List<Cliente> clientes = repositorioCliente.listar();
+        for (Cliente c : clientes) {
+            System.out.println(c.getNome());
+        }
+
 
         //Criando pedido
         Pedido pedido1 = new Pedido(1);
