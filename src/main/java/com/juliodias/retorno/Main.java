@@ -244,6 +244,95 @@ public class Main {
 
         //listando o pedido
         cliente1.listarPedidos();
+
+        //Dia 13 - Lambda
+        List<Produto> produtosList = new ArrayList<>();
+
+        // 5 produtos com preços diferentes
+        produto1.setPreco(1234);
+        produto2.setPreco(5678);
+        produto3.setPreco(789);
+        produto4.setPreco(900);
+        produto5.setPreco(1200);
+
+
+        produtosList.add(produto1);
+        produtosList.add(produto2);
+        produtosList.add(produto3);
+        produtosList.add(produto4);
+        produtosList.add(produto5);
+
+        //Parte 1 - impimir o nome
+        //produtosList.forEach( produto -> System.out.println(produto.getNome()));
+
+        //Parte 2 - imprimir nome e preço de cada produto
+
+        produtosList.forEach( produto -> {
+            System.out.print(produto.getNome());
+            System.out.println(" R$" + produto.getPreco());
+        });
+        System.out.println("***********");
+
+        //Parte 3 - Ordenar por preço via lambda
+        produtosList.sort(Comparator.comparing(Produto::getPreco));
+
+        produtosList.forEach(produto -> {
+            System.out.print(produto.getNome());
+            System.out.println(" R$" + produto.getPreco());
+        });
+        System.out.println("***********");
+
+        //Parte 4 - Ordenar por nome
+        produtosList.sort(Comparator.comparing(Produto::getNome, String.CASE_INSENSITIVE_ORDER));
+
+        produtosList.forEach(produto -> {
+            System.out.println(produto.getNome());
+        });
+
+        System.out.println("***********");
+
+        //Parte 5 - Comparar duas formas de pensar
+        List<Produto> ordenacao3 = new ArrayList<>(produtosList);
+        boolean trocado;
+        do {
+            trocado = false;
+            for (int i = 1; i < ordenacao3.size(); i++) {
+                Produto atual = ordenacao3.get(i - 1);
+                Produto proximo = ordenacao3.get(i);
+                if (atual.getPreco() > proximo.getPreco()) {
+                    // troca
+                    ordenacao3.set(i - 1, proximo);
+                    ordenacao3.set(i, atual);
+                    trocado = true;
+                }
+            }
+        } while (trocado);
+        for(Produto produto:ordenacao3) {
+            System.out.println(produto.getPreco());
+        }
+        System.out.println();
+        //Outra forma
+        produtosList.sort(Comparator.comparing(Produto::getPreco));
+        produtosList.forEach(produto -> {
+            System.out.println(produto.getPreco());
+        });
+        System.out.println();
+
+        //Parte 6 - Criar uma regra própria
+        produtosList.sort(Comparator.comparing(Produto::getNome, String.CASE_INSENSITIVE_ORDER).reversed().thenComparing(Produto::getPreco));
+        produtosList.forEach(produto -> {
+            System.out.print(produto.getNome());
+            System.out.println(" R$ " + produto.getPreco());
+        });
+
+        System.out.println();
+        //Parte 7 - Desafio
+        produtosList.forEach(produtoA -> {
+            if (produtoA.getPreco() > 1000) {
+                System.out.println(produtoA.getNome() + " -> R$ " + produtoA.getPreco());
+            }
+        });
+
     }
 
     public static void imprimirDadosFuncionario (Funcionario funcionario) {
