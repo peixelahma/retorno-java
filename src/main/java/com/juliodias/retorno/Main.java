@@ -10,6 +10,7 @@ import com.juliodias.domain.Produto;
 import com.juliodias.notificacao.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -332,6 +333,72 @@ public class Main {
                 System.out.println(produtoA.getNome() + " -> R$ " + produtoA.getPreco());
             }
         });
+
+        //Dia 14 - Stream
+        System.out.println("\n *** Dia 14 *** \n");
+        //Parte 1 - produtos com preço maior que R$ 1.000. e O resultado deve conter apenas os produtos que atendem à condição, sem alterar a lista original
+        System.out.println("Mais que 1000");
+        List<Produto> produtosFiltrados = produtosList.stream()
+                .filter(preco -> preco.getPreco() > 1000)
+                .toList();
+        produtosFiltrados.forEach(produto -> {
+            System.out.print(produto.getNome());
+            System.out.println(" R$ " + produto.getPreco());
+        });
+
+        //Parte 2 - prodtos menores que 1000
+        System.out.println("\n Menos que 1000");
+        produtosFiltrados = produtosList.stream()
+                .filter(preco -> preco.getPreco() < 1000)
+                .toList();
+        produtosFiltrados.forEach(produto -> {
+            System.out.print(produto.getNome());
+            System.out.println(" R$ " + produto.getPreco());
+        });
+
+        //Parte 3 - Obter os nomes com map
+        System.out.println("\n Utilização de map");
+        List<String> produtosFiltrado = produtosList.stream()
+                .map(Produto::getNome)
+                .collect(Collectors.toList());
+        System.out.println("ProdutosFiltrado: " + produtosFiltrado);
+
+        //Parte 4 - obtenha os nomes dos produtos com preço maior que R$ 1.000
+        System.out.println("\n Utilização de filter e de map");
+        produtosFiltrado = produtosList.stream()
+                .filter(preco -> preco.getPreco() > 1000)
+                .map(Produto::getNome)
+                .collect(Collectors.toList());
+        System.out.println("ProdutosFiltrado: " + produtosFiltrado);
+
+        //Parte 5 - Ordenação do maior para o menor e o inverso - preço
+        System.out.println("\n Ordenação - menor para o maior preço");
+        List<Produto> produtosOrdenado = produtosList.stream()
+                .sorted(Comparator.comparing(Produto::getPreco))
+                .toList();
+        produtosOrdenado.forEach(produto -> {
+            System.out.print(produto.getNome());
+            System.out.println(" R$ " + produto.getPreco());
+        });
+
+        System.out.println("\n Ordenação - maior para o menor preço");
+        produtosOrdenado = produtosList.stream()
+                .sorted(Comparator.comparing(Produto::getPreco))
+                .toList()
+                .reversed();
+        produtosOrdenado.forEach(produto -> {
+            System.out.print(produto.getNome());
+            System.out.println(" R$ " + produto.getPreco());
+        });
+
+        //Parte 6 - Obtenha os nomes dos produtos com preço acima de determinado valor, ordenados pelo preço.
+        produtosFiltrado = produtosList.stream()
+                .filter(produto -> produto.getPreco() > 800)
+                .sorted(Comparator.comparing(Produto::getPreco))
+                .map(Produto::getNome)
+                .toList();
+        System.out.println("Aplicado filtros da Pipeline: " + produtosFiltrado);
+
 
     }
 
