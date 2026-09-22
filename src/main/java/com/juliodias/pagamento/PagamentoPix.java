@@ -1,4 +1,4 @@
-package com.juliodias.Pagamento;
+package com.juliodias.pagamento;
 
 public class PagamentoPix {
     private String tipoPagamento;

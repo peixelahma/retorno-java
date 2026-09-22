@@ -1,12 +1,9 @@
 package com.juliodias.retorno;
 
-import com.juliodias.Pagamento.Pagamento;
-import com.juliodias.Pagamento.PagamentoCartao;
-import com.juliodias.Repository.Repositorio;
-import com.juliodias.domain.Cliente;
-import com.juliodias.domain.Funcionario;
-import com.juliodias.domain.Pedido;
-import com.juliodias.domain.Produto;
+import com.juliodias.domain.*;
+import com.juliodias.pagamento.Pagamento;
+import com.juliodias.pagamento.PagamentoCartao;
+import com.juliodias.repository.Repositorio;
 import com.juliodias.notificacao.*;
 
 import java.util.*;
@@ -399,6 +396,87 @@ public class Main {
                 .toList();
         System.out.println("Aplicado filtros da Pipeline: " + produtosFiltrado);
 
+        System.out.println("**** Dia 15 **** \n");
+        //Dia 15 - Revisão dos conceitos aprendidos até aqui -Consulta de produtos
+        //Consulta - todos os produtos acima de 1000
+        produtosFiltrados = produtosList.stream()
+                .filter(produto -> produto.getPreco() > 1000)
+                .toList();
+        System.out.println("Produtos acima de 1.000 : ");
+        for (Produto produtoA : produtosFiltrados) {
+            System.out.println(produtoA.getNome());
+        }
+
+        //Consulta - todos os produtos acima de 1000 e devolve apenas os nomes
+        produtosFiltrado = produtosList.stream()
+                .filter(produto -> produto.getPreco() > 1000)
+                .map(Produto::getNome)
+                .toList();
+        System.out.println("Produtos acima de 1.000 : ");
+        System.out.println(produtosFiltrado);
+
+        //Consulta Ordenada - menor para o maior
+        produtosFiltrado = produtosList.stream()
+                .filter(produto -> produto.getPreco() > 1000)
+                .sorted((p1, p2) -> Double.compare(p1.getPreco(), p2.getPreco()))
+                .map(Produto::getNome)
+                .toList();
+        System.out.println("Produtos acima de 1.000 Ordenados do menor para o maior: ");
+        System.out.println(produtosFiltrado);
+
+        //Consulta Ordenada - maior para o menor
+        produtosFiltrado = produtosList.stream()
+                .filter(produto -> produto.getPreco() > 1000)
+                .sorted((p1, p2) -> Double.compare(p1.getPreco(), p2.getPreco()))
+                .map(Produto::getNome)
+                .toList()
+                .reversed();
+        System.out.println("Produtos acima de 1.000 Ordenados do menor para o maior: ");
+        System.out.println(produtosFiltrado);
+
+        //Listar produtosList para saber se modificou a lista
+        System.out.println("Conteúdo da Lista original: ");
+        for(Produto produtoA : produtosList) {
+            System.out.println(produtoA.getNome() +  " R$ " + produtoA.getPreco());
+        }
+
+        //Parte 8 - Obtenha a lista do repositório e faça pelo menos uma das consultas anteriores utilizando essa lista.
+        Repositorio<Produto> produtoRepositorioStream = new Repositorio<>();
+
+        produtoRepositorioStream.adicionar(produto1);
+        produtoRepositorioStream.adicionar(produto2);
+        produtoRepositorioStream.adicionar(produto3);
+        produtoRepositorioStream.adicionar(produto4);
+        produtoRepositorioStream.adicionar(produto5);
+
+        System.out.println("Lista de Produtos do Repositório");
+        produtosFiltrado = produtoRepositorioStream.listar().stream()
+                .filter(produto -> produto.getPreco() < 1300)
+                .sorted( (p1, p2) -> Double.compare(p1.getPreco(), p2.getPreco()) )
+                .map(Produto::getNome)
+                .toList();
+        System.out.println(produtosFiltrado);
+
+
+        //Dia 16 - Records
+        System.out.println("\n Dia 16 - Records");
+        ProductRecord produtoRecord1 = new ProductRecord(1L, "mesa", 1200);
+        ProductRecord produtoRecord2 = new ProductRecord(2L,"cadeira", 980);
+
+        System.out.println("Produtos de uma classe record: " + produtoRecord1.nome());
+        System.out.println("Produtos de uma classe record: " + produtoRecord2.nome());
+
+        System.out.println(produtoRecord1);
+
+        ProductRecord produtoRecord3 = new ProductRecord(1L, "mesa", 1200);
+
+
+        System.out.println("Produtos iguais ? R: " + produtoRecord3.equals(produtoRecord1));
+        //System.out.println(produtoRecord3.preco() == produtoRecord1.preco());
+
+        //productRecord produtoRecord4 = new productRecord(4L, "mesa", -9);
+
+        System.out.println("Preço do produto é caro:  " + produtoRecord3.precoCaro() );
 
     }
 

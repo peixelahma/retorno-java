@@ -1,18 +1,19 @@
-package com.juliodias.Repository;
+package com.juliodias.repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Repositorio<T> {
     private List<T> registros;
+
     public Repositorio() {
         this.registros = new ArrayList<>();
     }
 
-
     public void adicionar(T registro) {
         registros.add(registro);
     }
+
     public void remover(T registro) {
         registros.remove(registro);
     }
@@ -22,6 +23,7 @@ public class Repositorio<T> {
     public int quantidade() {
         return registros.size();
     }
+
     public T buscar(int index) {
         return registros.get(index);
     }

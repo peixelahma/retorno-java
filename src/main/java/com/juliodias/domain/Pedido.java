@@ -1,7 +1,6 @@
 package com.juliodias.domain;
 
-import com.juliodias.Pagamento.Pagamento;
-import com.juliodias.Pagamento.TipoPagamento;
+import com.juliodias.pagamento.Pagamento;
 
 import java.util.ArrayList;
 import java.util.List;
