@@ -2,19 +2,19 @@ package com.juliodias.domain;
 
 public class Funcionario {
     private String nome;
-    private final int idade;
+    private int idade;
     private double salario;
     private boolean ativo;
 
     //Construtor
     public Funcionario(String nome, int idade, double salario, boolean ativo) {
+
         this.nome = nome;
         this.idade = idade;
         this.ativo = ativo;
         if (salario <= 0) {
-            throw new IllegalArgumentException("Salário deve ser maior que zero.");
+            throw new IllegalArgumentException("Salário do(a) " + nome  + " deve ser maior que zero.");
         }
-
         this.salario = salario;
     }
 
@@ -32,6 +32,7 @@ public class Funcionario {
     }
 
     //Informa aumento
+    /*
     public boolean aumentarPercentualSalario (double percentual) {
         if (percentual > 0) {
             this.salario = salario * (1 + percentual / 100);
@@ -39,6 +40,15 @@ public class Funcionario {
         }
         return false;
     }
+    */
+    //Informa aumento do dia 17 - Exceptions
+    public void aumentarPercentualSalario (double percentual) {
+        if (percentual < 0) {
+            throw new IllegalArgumentException("Percentual deve ser maior que zero");
+        }
+        this.salario = salario * (1 + percentual / 100);
+    }
+
 
     //Informa se funcionário maior de idade
     public boolean funcionarioMaiorDeIdade () {

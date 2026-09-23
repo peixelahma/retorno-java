@@ -1,11 +1,13 @@
 package com.juliodias.retorno;
 
+import ch.qos.logback.core.encoder.JsonEscapeUtil;
 import com.juliodias.domain.*;
 import com.juliodias.pagamento.Pagamento;
 import com.juliodias.pagamento.PagamentoCartao;
 import com.juliodias.repository.Repositorio;
 import com.juliodias.notificacao.*;
 
+import java.sql.SQLOutput;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,12 +22,12 @@ public class Main {
             salarioAnual = funcionario1.calcularSalarioAnual();
             System.out.println("Salário anual: " + salarioAnual);
 
-            if (funcionario1.aumentarPercentualSalario(10)) {
+            /*if (funcionario1.aumentarPercentualSalario(10)) {
                 System.out.println("Aumento salarial");
                 System.out.println("Salário mensal após aumento salarial:" + funcionario1.getSalario());
             } else {
                 System.out.println("Percentual de aumento salarial deve ser maior que 0");
-            }
+            }*/
 
             if (funcionario1.funcionarioMaiorDeIdade()) {
                 System.out.println("Funcionário maior de idade");
@@ -52,12 +54,12 @@ public class Main {
             salarioAnual = funcionario2.calcularSalarioAnual();
             System.out.println("Salário anual: " + salarioAnual);
 
-            if (funcionario2.aumentarPercentualSalario(-5)) {
+            /*if (funcionario2.aumentarPercentualSalario(-5)) {
                 System.out.println("Aumento salarial");
                 System.out.println("Salário mensal após aumento salarial:" + funcionario2.getSalario());
             } else {
                 System.out.println("Percentual de aumento salarial deve ser maior que 0");
-            }
+            }*/
 
             if (funcionario2.funcionarioMaiorDeIdade()) {
                 System.out.println("Funcionário maior de idade");
@@ -477,6 +479,50 @@ public class Main {
         //productRecord produtoRecord4 = new productRecord(4L, "mesa", -9);
 
         System.out.println("Preço do produto é caro:  " + produtoRecord3.precoCaro() );
+
+
+        //Dia 17 - Exception
+        System.out.println("Dia 17 - Exceptions");
+
+        try {
+            Funcionario func1 = new Funcionario("Julio", 45, 40000, true);
+            Funcionario func2 = new Funcionario("Cezar", 45, -40000, true);
+
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            Funcionario func3 = new Funcionario("Julio", 45, 40000, true);
+            System.out.println("Antes do aumento: " + func3.getSalario());
+            func3.aumentarPercentualSalario(20);
+            System.out.println("Depois do aumento1: " + func3.getSalario());
+            func3.aumentarPercentualSalario(-10);
+            System.out.println("Depois do aumento2: " + func3.getSalario());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            Funcionario func4 = new Funcionario("Ana", 45, -20000, true);
+            System.out.println("Antes do aumento: " + func4.getSalario());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro ao criar o funcionario: " + e.getMessage());
+        }
+        try{
+            Funcionario func5 = new Funcionario("Julia", 33, 20000, true);
+            func5.aumentarPercentualSalario(-15);
+        } catch (IllegalArgumentException e1) {
+            System.out.println("Erro ao aumentar o salario: " + e1.getMessage());
+        }
+
+        try {
+            ProductRecord produtoRecord4 = new ProductRecord(1L, "Fone", -120);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro ao criar Produto de um record: " + e.getMessage());
+        }
+
+
 
     }
 
