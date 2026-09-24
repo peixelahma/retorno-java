@@ -1,6 +1,7 @@
 package com.juliodias.retorno;
 
 import ch.qos.logback.core.encoder.JsonEscapeUtil;
+import com.juliodias.common.utils.StatusPedido;
 import com.juliodias.domain.*;
 import com.juliodias.pagamento.Pagamento;
 import com.juliodias.pagamento.PagamentoCartao;
@@ -522,6 +523,49 @@ public class Main {
             System.out.println("Erro ao criar Produto de um record: " + e.getMessage());
         }
 
+        //Dia 18 - Enums
+        System.out.println("\n dia 18 - Enums");
+
+        Pedido  pedido = new Pedido(10);
+        System.out.println("Status do pedido    : " + pedido.getStatusPedido());
+        pedido.adicionarProduto(produto1);
+        pedido.adicionarProduto(produto2);
+
+        //Pagar Pedido
+        try {
+            pedido.pagarPedido();
+            System.out.println("Status do pedido    : " + pedido.getStatusPedido());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());;
+        }
+
+        //Enviar Pedido
+        try {
+            pedido.enviarPedido();
+            System.out.println("Status do pedido    : " + pedido.getStatusPedido());
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());;
+        }
+
+        //Entregar Pedido
+        try {
+            pedido.entregarPedido();
+            System.out.println("Status do pedido    : " + pedido.getStatusPedido());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());;
+        }
+
+        //Transições inválidas
+        System.out.println("Transições inválidas");
+        Pedido  pedido2 = new Pedido(11);
+        pedido2.adicionarProduto(produto1);
+        // CRIADO -> ENVIADO
+        try{
+            pedido2.enviarPedido();
+            System.out.println("Status do pedido2    : " + pedido.getStatusPedido());
+        }catch (IllegalStateException e) {
+            System.out.println(e.getMessage());;
+        }
 
 
     }
