@@ -2,12 +2,12 @@ package com.juliodias.domain;
 
 public class Funcionario {
     private String nome;
-    private int idade;
+    private Integer idade;
     private double salario;
     private boolean ativo;
 
     //Construtor
-    public Funcionario(String nome, int idade, double salario, boolean ativo) {
+    public Funcionario(String nome, Integer idade, double salario, boolean ativo) {
 
         this.nome = nome;
         this.idade = idade;
@@ -24,12 +24,6 @@ public class Funcionario {
     public boolean isAtivo() {return ativo;}
     public int getIdade() {return idade;}
 
-
-    //Informa salário anual
-    public double calcularSalarioAnual() {
-        return salario * 12;
-        //return salario * 12;
-    }
 
     //Informa aumento
     /*
@@ -57,11 +51,6 @@ public class Funcionario {
         }
         return true;*/
         return idade >= 18;
-    }
-
-    //Informa se o funcionário está ativo
-    public boolean funcionarioAtivo () {
-        return ativo;
     }
 
     //Desativar funcionario

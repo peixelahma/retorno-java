@@ -23,7 +23,7 @@ public class Cliente {
             System.out.println("Pedido " + pedido.getNumeroPedido());
             System.out.println("Produtos:");
             pedido.listarProdutos();
-            pedido.listarFormaPagamento();
+            pedido.informarTipoDePagamento();
         }
     }
 

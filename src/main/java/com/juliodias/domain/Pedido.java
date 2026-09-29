@@ -22,7 +22,6 @@ public class Pedido {
         return numeroPedido;
     }
 
-
     public void adicionarProduto(Produto produto) {
         this.produtos.add(produto);
     }
@@ -34,7 +33,7 @@ public class Pedido {
         }
     }
 
-    public void listarFormaPagamento () {
+    public void informarTipoDePagamento() {
         pagamento.imprimirFormaPagamento();
     }
 

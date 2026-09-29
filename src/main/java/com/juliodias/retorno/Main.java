@@ -1,14 +1,11 @@
 package com.juliodias.retorno;
 
-import ch.qos.logback.core.encoder.JsonEscapeUtil;
-import com.juliodias.common.utils.StatusPedido;
 import com.juliodias.domain.*;
 import com.juliodias.pagamento.Pagamento;
 import com.juliodias.pagamento.PagamentoCartao;
 import com.juliodias.repository.Repositorio;
 import com.juliodias.notificacao.*;
 
-import java.sql.SQLOutput;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,28 +17,11 @@ public class Main {
         try {
             Funcionario funcionario1 = new Funcionario("Julio", 44, 10000, false);
             imprimirDadosFuncionario(funcionario1);
-            salarioAnual = funcionario1.calcularSalarioAnual();
-            System.out.println("Salário anual: " + salarioAnual);
+            System.out.println("Salário anual: " + (funcionario1.getSalario()*12));
 
-            /*if (funcionario1.aumentarPercentualSalario(10)) {
-                System.out.println("Aumento salarial");
-                System.out.println("Salário mensal após aumento salarial:" + funcionario1.getSalario());
-            } else {
-                System.out.println("Percentual de aumento salarial deve ser maior que 0");
-            }*/
-
-            if (funcionario1.funcionarioMaiorDeIdade()) {
-                System.out.println("Funcionário maior de idade");
-            } else {
-                System.out.println("Funcionário não atingiu a maioridade");
-            }
+            verificarSeMaiorDeIdade(funcionario1);
             funcionario1.ativarFuncionario();
-
-            if (funcionario1.funcionarioAtivo()) {
-                System.out.println("Funcionário Ativo !");
-            } else {
-                System.out.println("Funcionário Inativo !");
-            }
+            verificarSeAtivo(funcionario1);
         } catch(IllegalArgumentException e) {
             System.out.println("Não foi possível criar o funcionário: " + e.getMessage());
         }
@@ -52,8 +32,8 @@ public class Main {
         try {
             Funcionario funcionario2 = new Funcionario("Ana", 45, 7000, true);
             imprimirDadosFuncionario(funcionario2);
-            salarioAnual = funcionario2.calcularSalarioAnual();
-            System.out.println("Salário anual: " + salarioAnual);
+            salarioAnual = funcionario2.getSalario();
+            System.out.println("Salário anual: " + funcionario2.getSalario()*12);
 
             /*if (funcionario2.aumentarPercentualSalario(-5)) {
                 System.out.println("Aumento salarial");
@@ -62,18 +42,11 @@ public class Main {
                 System.out.println("Percentual de aumento salarial deve ser maior que 0");
             }*/
 
-            if (funcionario2.funcionarioMaiorDeIdade()) {
-                System.out.println("Funcionário maior de idade");
-            } else {
-                System.out.println("Funcionário não atingiu a maioridade");
-            }
+
+            verificarSeMaiorDeIdade(funcionario2);
 
 
-            if (funcionario2.funcionarioAtivo()) {
-                System.out.println("Funcionário Ativo !");
-            } else {
-                System.out.println("Funcionário Inativo !");
-            }
+            verificarSeAtivo(funcionario2);
 
             if (funcionario2.desativarFuncionario()) {
                 System.out.println("Funcionário desativado !");
@@ -81,11 +54,7 @@ public class Main {
                 System.out.println("Funcionario já estava inativo");
             }
 
-            if (funcionario2.funcionarioAtivo()) {
-                System.out.println("Funcionário Ativo !");
-            } else {
-                System.out.println("Funcionário Inativo !");
-            }
+            verificarSeAtivo(funcionario2);
 
             if (funcionario2.ativarFuncionario()) {
                 System.out.println("Funcionário ativado !");
@@ -93,11 +62,8 @@ public class Main {
                 System.out.println("Funcionario já estava inativo");
             }
 
-            if (funcionario2.funcionarioAtivo()) {
-                System.out.println("Funcionário Ativo !");
-            } else {
-                System.out.println("Funcionário Inativo !");
-            }
+            verificarSeAtivo(funcionario2);
+
         } catch(IllegalArgumentException e) {
             System.out.println("Não foi possível criar o funcionário: " + e.getMessage());
         }
@@ -137,7 +103,7 @@ public class Main {
         System.out.println("Exercício List");
         System.out.println("Quantidade de produtos cadastrado: " + produtos.size());
         System.out.println("Produto 2: " +  produtos.get(2));
-        System.out.println("Produto impressoa está na lista? " + produtos.contains(produto2));
+        System.out.println("Produto impressora está na lista? " + produtos.contains(produto2));
         produtos.remove(2);
         System.out.println("Quantidade de produtos cadastrado: " + produtos.size());
 
@@ -293,22 +259,23 @@ public class Main {
         System.out.println("***********");
 
         //Parte 5 - Comparar duas formas de pensar
-        List<Produto> ordenacao3 = new ArrayList<>(produtosList);
+        List<Produto> listaOrdenada3 = new ArrayList<>(produtosList);
         boolean trocado;
         do {
             trocado = false;
-            for (int i = 1; i < ordenacao3.size(); i++) {
-                Produto atual = ordenacao3.get(i - 1);
-                Produto proximo = ordenacao3.get(i);
+            for (int i = 1; i < listaOrdenada3.size(); i++) {
+                Produto atual = listaOrdenada3.get(i - 1);
+                Produto proximo = listaOrdenada3.get(i);
                 if (atual.getPreco() > proximo.getPreco()) {
                     // troca
-                    ordenacao3.set(i - 1, proximo);
-                    ordenacao3.set(i, atual);
+                    listaOrdenada3.set(i - 1, proximo);
+                    listaOrdenada3.set(i, atual);
                     trocado = true;
+
                 }
             }
         } while (trocado);
-        for(Produto produto:ordenacao3) {
+        for(Produto produto:listaOrdenada3) {
             System.out.println(produto.getPreco());
         }
         System.out.println();
@@ -575,6 +542,14 @@ public class Main {
         System.out.println("Salario: " + funcionario.getSalario());
         System.out.println("Idade: " + funcionario.getIdade());
         System.out.println("Ativo: " + funcionario.isAtivo());
+    }
+
+    public static void verificarSeMaiorDeIdade(Funcionario funcionario) {
+        System.out.println( funcionario.funcionarioMaiorDeIdade() ? "Funcionário maior de idade. " : "Funcionário não atingiu a maioridade");
+    }
+
+    public static void verificarSeAtivo(Funcionario funcionario) {
+        System.out.println( funcionario.isAtivo() ? "Funcionário Ativo !" : "Funcionário Inativo");
     }
 
    }
